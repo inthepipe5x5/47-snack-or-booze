@@ -1,0 +1,14 @@
+{
+  "name": "unroll",
+  "version": "1.0.0",
+  "description": "Snack or Booze Pt 2: Unroll function - unroll should take in such a square array and return a single array containing the values in the square",
+  "main": "unroll.js",
+  "scripts": {
+    "test": "jest unroll.test.js -i"
+  },
+  "author": "Lin",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
