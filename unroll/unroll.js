@@ -31,30 +31,40 @@ const unroll = (squareArray) => {
   const yIdx = squareArray.length;
   const maxIdx = (squareArray.length - 1) ** 2; //this is the maximum amount of values within the squareArray to loop through
 
-  const traverseHorizontal = (array, goingRightToLeft = false) => {
-    let toTraverse = !goingRightToLeft ? array : [...array].reverse();
-    unrolled = [...unrolled, ...toTraverse];
+  const traverseHorizontal = (arrayOfArrays, goingRightToLeft = false) => {
+    let toConcat = !goingRightToLeft ? arrayOfArrays.pop() : arrayOfArrays.shift();
+    unrolled = unrolled.concat(toConcat);
     yIdx -= 1; //reflect the change in square height
-    maxIdx -= toTraverse.length;
+    maxIdx -= toConcat.length;
   };
 
   const traverseVertically = (arrayOfArrays, goingUp = false) => {
-    let toTraverse = !goingUp ? arrayOfArrays : [...arrayOfArrays].reverse();
-
-    for (const array of toTraverse) {
-      const numSpliced = array.pop();
-      unrolled.push(numSpliced);
+    if (!goingUp) {
+      //going up => down
+      //loop to emulate going downwards on side of square
+      for (const array of arrayOfArrays) {
+        //going down always removes the last value on the "right" side of the square, therefore use .pop()
+        const numSpliced = array.pop();
+        unrolled.push(numSpliced);
+      }
+    } else if (goingUp) {
+      //going down => up
+      //loop from reverse to emulate going upwards on side of square
+      for (let idx = (yIdx - 1); (idx = 0); --idx) {
+        let array = array[idx];
+        const numSpliced = array.shift(); //going up always removes the first value on the "left" side of the square, therefore use .shift()
+        unrolled.push(numSpliced);
+      }
     }
     xIdx -= 1; //reflect the change in horizontal width
-    maxIdx -= toTraverse.length;
+    maxIdx -= yIdx;
   };
 
-
   while (maxIdx > 0) {
-    traverseHorizontal(squareArray.unshift(), false) //traverse top array left => right
-    traverseVertically(squareArray, false) //traverse right values top => down 
-    traverseHorizontal(squareArray.pop(), true) //traverse bottom array right => left 
-    traverseVertically(squareArray, true) //traverse left values down => top 
+    traverseHorizontal(squareArray, false); //traverse top array left => right
+    traverseVertically(squareArray, false); //traverse right values top => down
+    traverseHorizontal(squareArray, true); //traverse bottom array right => left
+    traverseVertically(squareArray, true); //traverse left values down => top
   }
   return unrolled;
 };
