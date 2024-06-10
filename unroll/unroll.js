@@ -26,17 +26,37 @@ For the above example, ***unroll*** should return:
 
 */
 const unroll = (squareArray) => {
-    const unrolled = []
-    const xIdx = 0
-    const yIdx = 0
-    const maxIdx = (squareArray.length - 1)** 2 //this is the maximum amount of values within the squareArray to loop through
+  const unrolled = [];
+  const xIdx = squareArray.length;
+  const yIdx = squareArray.length;
+  const maxIdx = (squareArray.length - 1) ** 2; //this is the maximum amount of values within the squareArray to loop through
 
-    for (let index = 0; index < squareArray.length; index++) {
-        const element = squareArray[index];
-        
+  const traverseHorizontal = (array, goingRightToLeft = false) => {
+    let toTraverse = !goingRightToLeft ? array : [...array].reverse();
+    unrolled = [...unrolled, ...toTraverse];
+    yIdx -= 1; //reflect the change in square height
+    maxIdx -= toTraverse.length;
+  };
+
+  const traverseVertically = (arrayOfArrays, goingUp = false) => {
+    let toTraverse = !goingUp ? arrayOfArrays : [...arrayOfArrays].reverse();
+
+    for (const array of toTraverse) {
+      const numSpliced = array.pop();
+      unrolled.push(numSpliced);
     }
+    xIdx -= 1; //reflect the change in horizontal width
+    maxIdx -= toTraverse.length;
+  };
 
-    return unrolled
+
+  while (maxIdx > 0) {
+    traverseHorizontal(squareArray.unshift(), false) //traverse top array left => right
+    traverseVertically(squareArray, false) //traverse right values top => down 
+    traverseHorizontal(squareArray.pop(), true) //traverse bottom array right => left 
+    traverseVertically(squareArray, true) //traverse left values down => top 
+  }
+  return unrolled;
 };
 
 module.exports = unroll;
