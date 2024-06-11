@@ -26,47 +26,59 @@ For the above example, ***unroll*** should return:
 
 */
 const unroll = (squareArray) => {
-  const unrolled = [];
-  const xIdx = squareArray.length;
-  const yIdx = squareArray.length;
-  const maxIdx = (squareArray.length - 1) ** 2; //this is the maximum amount of values within the squareArray to loop through
+  let unrolled = [];
+  let copiedArray = squareArray.map(row => [...row])
 
   const traverseHorizontal = (arrayOfArrays, goingRightToLeft = false) => {
-    let toConcat = !goingRightToLeft ? arrayOfArrays.pop() : arrayOfArrays.shift();
-    unrolled = unrolled.concat(toConcat);
-    yIdx -= 1; //reflect the change in square height
-    maxIdx -= toConcat.length;
+    if (arrayOfArrays.length === 0) return unrolled;
+    else if (!goingRightToLeft) {
+      // left to right
+      unrolled = unrolled.concat(arrayOfArrays.shift());
+    } else {
+      // right to left
+      unrolled = unrolled.concat(arrayOfArrays.pop().reverse());
+    }
   };
 
   const traverseVertically = (arrayOfArrays, goingUp = false) => {
-    if (!goingUp) {
-      //going up => down
-      //loop to emulate going downwards on side of square
-      for (const array of arrayOfArrays) {
-        //going down always removes the last value on the "right" side of the square, therefore use .pop()
-        const numSpliced = array.pop();
-        unrolled.push(numSpliced);
+    if (arrayOfArrays.length === 0) return unrolled;
+    else if (!goingUp) {
+      // top to bottom
+      for (let i = 0; i < arrayOfArrays.length; i++) {
+        unrolled.push(arrayOfArrays[i].pop());
       }
-    } else if (goingUp) {
-      //going down => up
-      //loop from reverse to emulate going upwards on side of square
-      for (let idx = (yIdx - 1); (idx = 0); --idx) {
-        let array = array[idx];
-        const numSpliced = array.shift(); //going up always removes the first value on the "left" side of the square, therefore use .shift()
-        unrolled.push(numSpliced);
+    } else {
+      // bottom to top
+      for (let i = arrayOfArrays.length - 1; i >= 0; i--) {
+        unrolled.push(arrayOfArrays[i].shift());
       }
     }
-    xIdx -= 1; //reflect the change in horizontal width
-    maxIdx -= yIdx;
   };
 
-  while (maxIdx > 0) {
-    traverseHorizontal(squareArray, false); //traverse top array left => right
-    traverseVertically(squareArray, false); //traverse right values top => down
-    traverseHorizontal(squareArray, true); //traverse bottom array right => left
-    traverseVertically(squareArray, true); //traverse left values down => top
+  while (copiedArray.length > 0) {
+    if (copiedArray.length === 0) return unrolled;
+    traverseHorizontal(copiedArray, false); // left to right
+    if (copiedArray.length > 0) {
+      traverseVertically(copiedArray, false); // top to bottom
+    }
+    if (copiedArray.length > 0) {
+      traverseHorizontal(copiedArray, true); // right to left
+    }
+    if (copiedArray.length > 0) {
+      traverseVertically(copiedArray, true); // bottom to top
+    }
   }
+
   return unrolled;
 };
+
+console.log(
+  unroll([
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, 16],
+  ])
+);
 
 module.exports = unroll;
