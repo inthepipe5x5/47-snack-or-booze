@@ -9,7 +9,7 @@ import {
   CardTitle,
   CardText,
   ListGroup,
-  ListGroupItem
+  ListGroupItem,
 } from "reactstrap";
 
 function FoodMenu({ title, foodType, foodItems }) {
@@ -18,14 +18,14 @@ function FoodMenu({ title, foodType, foodItems }) {
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
-             ${title} Menu
+            ${title} Menu
           </CardTitle>
           <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            Here are your choices for {foodType} available at our cafe today.
+            There are {foodItems.length} options available to choose from!
           </CardText>
           <ListGroup>
-            {foodItems.map(item => (
+            {foodItems.map((item) => (
               <Link to={`/${foodType}/${item.id}`} key={item.id}>
                 <ListGroupItem>{item.name}</ListGroupItem>
               </Link>
