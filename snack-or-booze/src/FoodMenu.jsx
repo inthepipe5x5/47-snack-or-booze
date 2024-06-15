@@ -18,7 +18,7 @@ function FoodMenu({ title, foodType, foodItems }) {
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
-            ${title} Menu
+            {title} Menu
           </CardTitle>
           <CardText>
             Here are your choices for {foodType} available at our cafe today.

@@ -30,7 +30,7 @@ const NavBar = ({ direction = "down", ...args }) => {
             <Link to="/snacks">Snacks Menu</Link>
           </DropdownItem>
           <DropdownItem>
-            <Link to="/drinks">Snacks Menu</Link>
+            <Link to="/drinks">Drinks Menu</Link>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+import BackButton from "./BackButton";
 import "./App.css";
 import Home from "./Home";
 import SnackOrBoozeApi from "./Api";
@@ -19,7 +20,7 @@ function App() {
       let snacks = await SnackOrBoozeApi.getSnacks();
       let drinks = await SnackOrBoozeApi.getDrinks();
       setSnacks(snacks);
-      setDrinks(drinks)
+      setDrinks(drinks);
       setIsLoading(false);
     }
     getFoodItems();
@@ -32,23 +33,31 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
+        <div class="col">
+          <div class="row">
+            <BackButton />{" "}
+          </div>
+          <div class="row">
+            <NavBar />{" "}
+          </div>
+        </div>
+
         <main>
           <Switch>
             <Route exact path="/">
               <Home snacks={snacks} drinks={drinks} />
             </Route>
-            <Route exact path="/snacks">
-              <FoodMenu foodType='snacks' foodItems={snacks} title="Snacks" />
-            </Route>
             <Route path="/snacks/:id">
               <FoodItem items={snacks} cantFind="/snacks" />
             </Route>
-            <Route exact path="/drinks">
-              <FoodMenu foodType='drinks' foodItems={drinks} title="Drinks" />
+            <Route exact path="/snacks">
+              <FoodMenu foodType="snacks" foodItems={snacks} title="Snacks" />
             </Route>
             <Route path="/drinks/:id">
               <FoodItem items={drinks} cantFind="/drinks" />
+            </Route>
+            <Route exact path="/drinks">
+              <FoodMenu foodType="drinks" foodItems={drinks} title="Drinks" />
             </Route>
             <Route>
               <p>Hmmm. I can't seem to find what you want.</p>
