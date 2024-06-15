@@ -14,21 +14,17 @@ class SnackOrBoozeApi {
   static async getSnacks() {
     try {
       const result = await axios.get(`${BASE_API_URL}/snacks`);
-      console.log("Snacks retrieved successfully:", response.data);
+      console.log("Snacks retrieved successfully:", result.data);
     } catch (error) {
       console.error("Error retrieving snack data:", error);
-    } finally {
-      return response.data;
     }
   }
   static async postSnack(snackData) {
     try {
-      const response = await axios.post("/snack", snackData);
-      console.log("Snack posted successfully:", response.data);
+      const result = await axios.post("/snack", snackData);
+      console.log("Snack posted successfully:", result.data);
     } catch (error) {
       console.error("Error posting snack:", error);
-    } finally {
-      return response.data;
     }
   }
 
@@ -40,12 +36,10 @@ class SnackOrBoozeApi {
 
   static async postDrink(drinkData) {
     try {
-      const response = await axios.post("/Drink", drinkData);
-      console.log("Drink posted successfully:", response.data);
+      const result = await axios.post("/Drink", drinkData);
+      console.log("Drink posted successfully:", result.data);
     } catch (error) {
       console.error("Error posting Drink:", error);
-    } finally {
-      return response.data;
     }
   }
 }
