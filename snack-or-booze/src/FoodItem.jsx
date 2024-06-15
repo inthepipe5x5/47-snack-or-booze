@@ -7,22 +7,22 @@ import { Card, CardBody, CardTitle, CardText } from "reactstrap";
 function FoodItem({ items, cantFind }) {
   const { id } = useParams();
 
-  let snack = items.find(snack => snack.id === id);
-  if (!snack) return <Redirect to={cantFind} />;
+  let foodItem = items.find(foodItem => foodItem.id === id);
+  if (!foodItem) return <Redirect to={cantFind} />;
 
   return (
     <section>
       <Card>
         <CardBody>
           <CardTitle className="font-weight-bold text-center">
-            {snack.name}
+            {foodItem.name}
           </CardTitle>
-          <CardText className="font-italic">{snack.description}</CardText>
+          <CardText className="font-italic">{foodItem.description}</CardText>
           <p>
-            <b>Recipe:</b> {snack.recipe}
+            <b>Recipe:</b> {foodItem.recipe}
           </p>
           <p>
-            <b>Serve:</b> {snack.serve}
+            <b>Serve:</b> {foodItem.serve}
           </p>
         </CardBody>
       </Card>
