@@ -12,6 +12,7 @@ function Home() {
               Welcome to Silicon Valley's premier dive cafe!
             </h3>
           </CardTitle>
+          <p>Currently, we have {snacks.length} snacks and {drinks.length} on our menu!</p>
         </CardBody>
       </Card>
     </section>
