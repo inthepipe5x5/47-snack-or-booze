@@ -18,42 +18,52 @@ const NewFood = () => {
     description: "",
     recipe: "",
     serve: "",
-    drink: false,
-    snack: false,
+    foodType: "snack", // default to snack, this will be controlled by radio buttons
   };
 
   const [inputData, setInputData] = useState(defaultInputData);
 
   const handleInput = (evt) => {
-    const { name, value, type, checked } = evt.target;
+    const { name, value } = evt.target;
     setInputData((prevState) => ({
       ...prevState,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
+    }));
+  };
+
+  const handleRadioInput = (evt) => {
+    setInputData((prevState) => ({
+      ...prevState,
+      foodType: evt.target.value,
     }));
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const { name, description, recipe, serve, snack, drink } = inputData;
+    const { name, description, recipe, serve, foodType } = inputData;
 
-    if (snack) {
-      await SnackOrBoozeApi.postSnack({
-        name: name,
-        description: description,
-        recipe: recipe,
-        serve: serve,
-      });
-    } else if (drink) {
-      await SnackOrBoozeApi.postDrink({
-        name: name,
-        description: description,
-        recipe: recipe,
-        serve: serve,
-      });
+    try {
+      if (foodType === "snack") {
+        await SnackOrBoozeApi.postSnack({
+          id: name.toLowerCase(),
+          name: name,
+          description: description,
+          recipe: recipe,
+          serve: serve,
+        });
+      } else if (foodType === "drink") {
+        await SnackOrBoozeApi.postDrink({
+          id: name.toLowerCase(),
+          name: name,
+          description: description,
+          recipe: recipe,
+          serve: serve,
+        });
+      }
+      setInputData(defaultInputData); // Reset the form after submission
+    } catch (error) {
+      console.error("Error submitting data:", error);
     }
-
-    // Reset the form after submission
-    setInputData(defaultInputData);
   };
 
   return (
@@ -64,7 +74,7 @@ const NewFood = () => {
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup row>
-            <Label for="name" sm={2}>
+            <Label for="name" sm={4}>
               Food Name
             </Label>
             <Col sm={10}>
@@ -80,7 +90,7 @@ const NewFood = () => {
           </FormGroup>
 
           <FormGroup row>
-            <Label for="description" sm={2}>
+            <Label for="description" sm={4}>
               Description
             </Label>
             <Col sm={10}>
@@ -94,24 +104,56 @@ const NewFood = () => {
             </Col>
           </FormGroup>
 
+          <FormGroup row>
+            <Label for="recipe" sm={4}>
+              Recipe
+            </Label>
+            <Col sm={10}>
+              <Input
+                id="recipe"
+                name="recipe"
+                type="textarea"
+                value={inputData.recipe}
+                onChange={handleInput}
+              />
+            </Col>
+          </FormGroup>
+
+          <FormGroup row>
+            <Label for="serve" sm={4}>
+              How To Serve
+            </Label>
+            <Col sm={10}>
+              <Input
+                id="serve"
+                name="serve"
+                type="textarea"
+                value={inputData.serve}
+                onChange={handleInput}
+              />
+            </Col>
+          </FormGroup>
+
           <FormGroup row tag="fieldset">
             <legend className="col-form-label col-sm-2">Food Type</legend>
             <Col sm={10}>
               <FormGroup check>
                 <Input
-                  name="snack"
                   type="radio"
-                  checked={inputData.snack}
-                  onChange={handleInput}
+                  name="foodType"
+                  value="snack"
+                  checked={inputData.foodType === "snack"}
+                  onChange={handleRadioInput}
                 />
                 <Label check>Snack</Label>
               </FormGroup>
               <FormGroup check>
                 <Input
-                  name="drink"
                   type="radio"
-                  checked={inputData.drink}
-                  onChange={handleInput}
+                  name="foodType"
+                  value="drink"
+                  checked={inputData.foodType === "drink"}
+                  onChange={handleRadioInput}
                 />
                 <Label check>Drink</Label>
               </FormGroup>

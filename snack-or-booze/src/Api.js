@@ -22,7 +22,7 @@ class SnackOrBoozeApi {
   }
   static async postSnack(snackData) {
     try {
-      const result = await axios.post("/snack", snackData);
+      const result = await axios.post(`${BASE_API_URL}/snacks`, snackData);
       console.log("Snack posted successfully:", result.data);
       return result.data;
     } catch (error) {
@@ -42,7 +42,7 @@ class SnackOrBoozeApi {
 
   static async postDrink(drinkData) {
     try {
-      const result = await axios.post("/Drink", drinkData);
+      const result = await axios.post(`${BASE_API_URL}/drinks`, drinkData);
       console.log("Drink posted successfully:", result.data);
       return result.data;
     } catch (error) {

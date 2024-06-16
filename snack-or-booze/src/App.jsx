@@ -34,11 +34,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div class="col">
-          <div class="row">
+        <div className="col">
+          <div className="row">
             <BackButton />
           </div>
-          <div class="row">
+          <div className="row">
             <NavBar />
           </div>
         </div>
