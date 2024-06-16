@@ -9,6 +9,7 @@ import NavBar from "./NavBar";
 import { Route, Switch } from "react-router-dom";
 import FoodMenu from "./FoodMenu";
 import FoodItem from "./FoodItem";
+import NewFood from "./NewFood";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +36,10 @@ function App() {
       <BrowserRouter>
         <div class="col">
           <div class="row">
-            <BackButton />{" "}
+            <BackButton />
           </div>
           <div class="row">
-            <NavBar />{" "}
+            <NavBar />
           </div>
         </div>
 
@@ -58,6 +59,9 @@ function App() {
             </Route>
             <Route exact path="/drinks">
               <FoodMenu foodType="drinks" foodItems={drinks} title="Drinks" />
+            </Route>
+            <Route path='/submit'>
+              <NewFood></NewFood>
             </Route>
             <Route>
               <p>Hmmm. I can't seem to find what you want.</p>

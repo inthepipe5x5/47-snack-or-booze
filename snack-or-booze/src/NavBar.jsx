@@ -21,16 +21,18 @@ const NavBar = ({ direction = "down", ...args }) => {
       <Dropdown isOpen={dropdownOpen} toggle={toggle} direction={direction}>
         <DropdownToggle caret>Snack or Booze</DropdownToggle>
         <DropdownMenu {...args}>
-          <DropdownItem header>Menu</DropdownItem>
+          <DropdownItem header>
+            <Link to="/">Snack or Booze</Link>
+          </DropdownItem>
           <DropdownItem divider />
           <DropdownItem>
-            <Link to="/">Home</Link>
+            <Link to="/snacks">Snacks</Link>
           </DropdownItem>
           <DropdownItem>
-            <Link to="/snacks">Snacks Menu</Link>
+            <Link to="/drinks">Drinks</Link>
           </DropdownItem>
           <DropdownItem>
-            <Link to="/drinks">Drinks Menu</Link>
+            <Link to="/submit">Submit Your Own Snack Or Drink</Link>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
