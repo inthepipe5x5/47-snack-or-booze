@@ -10,6 +10,7 @@ import { Route, Switch } from "react-router-dom";
 import FoodMenu from "./FoodMenu";
 import FoodItem from "./FoodItem";
 import NewFood from "./NewFood";
+import NotFound from "./NotFound";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,11 +61,11 @@ function App() {
             <Route exact path="/drinks">
               <FoodMenu foodType="drinks" foodItems={drinks} title="Drinks" />
             </Route>
-            <Route path='/submit'>
+            <Route path="/submit">
               <NewFood></NewFood>
             </Route>
-            <Route>
-              <p>Hmmm. I can't seem to find what you want.</p>
+            <Route path="*">
+              <NotFound></NotFound>
             </Route>
           </Switch>
         </main>

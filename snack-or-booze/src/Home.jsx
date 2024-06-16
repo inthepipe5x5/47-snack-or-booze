@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { Card, CardBody, CardTitle } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Card, CardBody, CardTitle, Button } from "reactstrap";
 
-function Home({snacks, drinks}) {
+function Home({ snacks, drinks }) {
   return (
     <section className="col-md-8">
       <Card>
@@ -12,7 +13,20 @@ function Home({snacks, drinks}) {
               Welcome to Silicon Valley's premier dive cafe!
             </h3>
           </CardTitle>
-          <p>Currently, we have {snacks.length} snacks and {drinks.length} on our menu!</p>
+          <p>
+            Currently, we have {snacks.length} snacks and {drinks.length} drinks
+            on our menu!
+          </p>
+          <Link to="/snacks">
+            <Button outline color="secondary">
+              Snack Menu
+            </Button>
+          </Link>
+          <Link to="/drinks">
+            <Button outline color="secondary">
+              Drink Menu
+            </Button>
+          </Link>
         </CardBody>
       </Card>
     </section>
