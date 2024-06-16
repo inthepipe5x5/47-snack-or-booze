@@ -13,16 +13,19 @@ import {
 import SnackOrBoozeApi from "./Api";
 
 const NewFood = () => {
+  // Default state for the form inputs
   const defaultInputData = {
     name: "",
     description: "",
     recipe: "",
     serve: "",
-    foodType: "snack", // default to snack, this will be controlled by radio buttons
+    foodType: "snack", // Default to 'snack'; controlled by radio buttons
   };
 
+  // useState hook to manage form input data
   const [inputData, setInputData] = useState(defaultInputData);
 
+  // Handle input changes for text and textarea fields
   const handleInput = (evt) => {
     const { name, value } = evt.target;
     setInputData((prevState) => ({
@@ -31,6 +34,7 @@ const NewFood = () => {
     }));
   };
 
+  // Handle radio button input changes
   const handleRadioInput = (evt) => {
     setInputData((prevState) => ({
       ...prevState,
@@ -38,29 +42,33 @@ const NewFood = () => {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const { name, description, recipe, serve, foodType } = inputData;
 
     try {
+      // Make API call based on foodType
       if (foodType === "snack") {
         await SnackOrBoozeApi.postSnack({
           id: name.toLowerCase(),
-          name: name,
-          description: description,
-          recipe: recipe,
-          serve: serve,
+          name,
+          description,
+          recipe,
+          serve,
         });
       } else if (foodType === "drink") {
         await SnackOrBoozeApi.postDrink({
           id: name.toLowerCase(),
-          name: name,
-          description: description,
-          recipe: recipe,
-          serve: serve,
+          name,
+          description,
+          recipe,
+          serve,
         });
       }
-      setInputData(defaultInputData); // Reset the form after submission
+
+      // Reset the form after successful submission
+      setInputData(defaultInputData);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -74,7 +82,7 @@ const NewFood = () => {
       <CardBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup row>
-            <Label for="name" sm={4}>
+            <Label for="name" sm={8}>
               Food Name
             </Label>
             <Col sm={10}>
@@ -90,7 +98,7 @@ const NewFood = () => {
           </FormGroup>
 
           <FormGroup row>
-            <Label for="description" sm={4}>
+            <Label for="description" sm={8}>
               Description
             </Label>
             <Col sm={10}>
@@ -105,7 +113,7 @@ const NewFood = () => {
           </FormGroup>
 
           <FormGroup row>
-            <Label for="recipe" sm={4}>
+            <Label for="recipe" sm={8}>
               Recipe
             </Label>
             <Col sm={10}>
@@ -120,7 +128,7 @@ const NewFood = () => {
           </FormGroup>
 
           <FormGroup row>
-            <Label for="serve" sm={4}>
+            <Label for="serve" sm={8}>
               How To Serve
             </Label>
             <Col sm={10}>
@@ -135,7 +143,7 @@ const NewFood = () => {
           </FormGroup>
 
           <FormGroup row tag="fieldset">
-            <legend className="col-form-label col-sm-2">Food Type</legend>
+            <legend className="col-form-label col-sm-8">Food Type</legend>
             <Col sm={10}>
               <FormGroup check>
                 <Input
